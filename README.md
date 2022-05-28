@@ -40,5 +40,10 @@ If the _Show Preview_ slider was 'on', then it will generate a copy of the downl
 ## Known Problems
 There are no **Known Problems** yet, if you face one, feel free to inform me in the _issues_ section. I will try to fix as many problems as I can.
 
+## Some Screenshots
+![image](https://user-images.githubusercontent.com/76505499/170830547-b18aecb4-e952-4861-8caa-7ad5c3dc137e.png)
+![image](https://user-images.githubusercontent.com/76505499/170830560-141a409a-c4eb-47af-bf25-15a166816ae9.png)
+![image](https://user-images.githubusercontent.com/76505499/170830575-da3a81ed-8be8-4837-be7b-8f6470960842.png)
+
 **Hope you like this software.**
 **Made with love by _Ansh Malviya_**
