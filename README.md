@@ -17,6 +17,8 @@ The **setup.py** will install the required modules, alternatively, you can also 
 * **Eel**:  `pip install eel`
 * **PyTube**:  It is recommanded to use the GitHub version on pytube since they are of the latest version and pip version of pytube contains some bugs. Use `pip install git+https://github.com/pytube/pytube` command to install it, note that this need _Git_ to be installed in your device. If you don't have _Git_ installed, then download it manually from the [GitHub page of the module](https://github.com/pytube/pytube) and run **setup.py** file from it.
 
+Once the required files are installed, simply run **YouTube Downloader.py** or **YouTube Downloader.exe** (if created an executable) to use the software.
+
 ## Eel
 Eel is a little Python library for making simple Electron-like offline HTML/JS GUI apps, with full access to Python capabilities and libraries.
 
@@ -38,4 +40,5 @@ If the _Show Preview_ slider was 'on', then it will generate a copy of the downl
 ## Known Problems
 There are no **Known Problems** yet, if you face one, feel free to inform me in the _issues_ section. I will try to fix as many problems as I can.
 
+**Hope you like this software.**
 **Made with love by _Ansh Malviya_**
