@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>YouTube Downloader</title>
+        <link rel="icon" href="favicon.png" sizes="1x1" />
+        <link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Charm" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link href="/css/style.css" rel="stylesheet" type="text/css" />
+        <script src="/eel.js"></script>
+        <script src="/js/script.js"></script>
+    </head>
+    <body>
+        <!-- -----------------------Home Page--------------------------->
+        <div id="home-page">
+            <div class="home-left">
+                <div class="home-container-left">
+                    <div class="title-container">
+                        <h1 class="main-title"><span style="background-image: linear-gradient(135deg, #00D1FF, #00D1FF, #FFFFFF, #FF00C7, #E69CEA, #FEA516, #2515D7, #00F0FF, #00F0FF); background-clip: text; -webkit-background-clip: text; color: transparent;">YouTube Downloader</span></h1>
+                        <div clsss="description">
+                            <p class="description-text"><span style="background-image: linear-gradient(315deg, #00D1FF, #FF00C7, #00D1FF, #000000, #FF00C7, #E69CEA, #2515D7, #00F0FF, #00F0FF, #00F0FF); background-clip: text; -webkit-background-clip: text;">Made with ❤ by Ansh Malviya</p></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="home-right">
+                <div class="home-container-right">
+                    <div class="form-background">
+                        <h2 class="sub-heading" style="position: relative; top: 18px;">Home</h2>
+                        <div style="position: relative; top: 15%;">
+                            <p class="label">Enter the URL of the YouTube Video:</p> <br>
+                            <input type="url" id="yt-link" class="input url-input"><br>
+                            <p class="label" style="margin-top: 18px;">Make sure you read the <span class="TnC" style="font-style: italic; cursor: help" onclick="show_popup('YouTube Downloader', 'This is a free-to-use software where you can get your favourite videos and songs for free without any paid subscription or charges. However, you must be responsible with the content you download and make sure you meet the guidelines for ‘Fair Use’ of YouTube. <br>→ The content you download should be used for personal use only. <br>→ The content you download may not be used for any commercial use or monetary purposes. <br>→ Make sure you mention the original owner/artist of the content you use for any non-monetary purposes. <br><br>If you like this software and use content downloaded via this software, then please consider mentioning my name in the platform you use this application.')">'Terms and Conditions'</span> for using this software.</p>
+                        </div>
+                        <button class="sub-button" onclick="start_processing()">Continue</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- -------------------------File Configuration Menu------------------------------- -->
+        <div class="config-menu">
+            <div class="back-config-bg">
+                <button class="back-config-button" onclick="back_to_home()"><span class="back-config-fg">&curvearrowleft;</span></button>
+            </div>
+            <div class="title-container">
+                <h1 class="main-title"><span style="background-image: linear-gradient(135deg, #00D1FF, #FF00C7); background-clip: text; -webkit-background-clip: text; color: transparent;">YouTube Downloader</span></h1>
+            </div>
+            <div class="detail-cont">
+                <div class="vid-title">
+                    <span class="opt-label">Video Title: </span>
+                    <span class="opt-descript" id="vid-title"></span>
+                </div>
+                <div class="auth-title">
+                    <span class="opt-label">Author/Artist: </span>
+                    <span class="opt-descript" id="auth-title"></span>
+                </div>
+                <div class="opt-cont" style="display: flex; flex-wrap: wrap; margin-top: 54px;">
+                    <div class="type-opt">
+                        <label for="file-type" class="opt-label">Select File Type for Download:</label>
+                        <select id="file-type" onchange="update_video_resolution_option()">
+                            <option>Video</option>
+                            <option>Audio</option>
+                        </select>
+                    </div>
+                    <div class="res-opt">
+                        <label for="vid-res" class="opt-label">Select Video Resolution:</label>
+                        <select id="vid-res"></select>
+                    </div>
+
+                    <!-- Remove this code if you want to pack this file as an executable with the '--onefile' arg or as a single file. -->
+                    <div class="prev-opt" style="margin-top: 18px;">
+                        <label for="prev-tog" class="opt-label" style="margin-right: 27px;">Show Video Preview: </label>
+                        <label class="switch">
+                            <input type="checkbox" id="prev-toggle">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <!-- ------------------------------------------------------------------------------------------------------------- -->
+
+                </div>
+                <div class="download-cont">
+                    <button class="dl-button" onclick="start_download()">Start Download</button>
+                    <div class="dl-button-bg"></div>
+                    <div class="background-signal"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ------------------------------------Download Porgress Popup------------------------------- -->
+        <div class="download-popup" style="display: none;">
+            <div class="popup-bg"></div>
+            <div class="popup-win">
+                <div class="popup-title">
+                    <h1 style="text-align: center;"><span style="background-image: linear-gradient(270deg, rgba(0, 255, 209, 1), rgba(255, 0, 184, 1)); font-family: 'Charm'; background-clip: text; -webkit-background-clip: text; color: transparent;" id="dl-popup-title">Download is Progress</span></h1>
+                </div>
+                <div class="desc-cont">
+                    <div class="title-desc">
+                        <span class="desc-label">Video Title: </span>
+                        <span class="dl-description" id="vid-title-lab"></span>
+                    </div>
+                    <div class="red-desc">
+                        <span class="desc-label">Video Resolution: </span>
+                        <span class="dl-description" id="vid-res-lab"></span>
+                    </div>
+                    <div class="type-desc">
+                        <span class="desc-label">Video Type: </span>
+                        <span class="dl-description" id="vid-type-lab"></span>
+                    </div>
+                </div>
+                <div class="dl-pp-cont" style="margin-top: 27px;">
+                    <div class="aud-dl" style="margin-top: 18px;">
+                        <span class="dl-label">Audio: </span>
+                        <span class="dl-percent" id="aud-perc">0%</span>
+                        <div class="progress-bg">
+                            <div class="white-bg">
+                                <div class="progress-bar" id="aud-pro"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="vid-dl" style="margin-top: 18px; display: none;">
+                        <span class="dl-label">Video: </span>
+                        <span class="dl-percent" id="vid-perc">0%</span>
+                        <div class="progress-bg">
+                            <div class="white-bg">
+                                <div class="progress-bar" id="vid-pro"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- -----------------------------------Simple Message Popup---------------------------- -->
+        <div class="popup">
+            <div class="popup-bg" onclick="document.getElementsByClassName('popup')[0].style = 'display: none'"></div>
+            <div class="popup-win">
+                <div class="popup-title">
+                    <h1 style="text-align: center;"><span style="background-image: linear-gradient(270deg, rgba(0, 255, 209, 1), rgba(255, 0, 184, 1)); font-family: 'Charm'; background-clip: text; -webkit-background-clip: text; color: transparent;" id="popup-title"></span></h1>
+                </div>
+                <p id="popup-description"></p>
+            </div>
+        </div>
+
+        <!-- --------------------------------------Load Animation------------------------------ -->
+        <div class="load-anim">
+            <div class="load-bg"></div>
+            <div class="load-cont">
+                <div class="loader"></div>
+            </div>
+                <div class="load-desc" style="position: fixed; top: 63%; left: calc(50% - 214px); display: none;" id="load-desc">
+                    <span style="background-image: linear-gradient(#ffffff, #FFFFFF); background-clip: text; -webkit-background-clip: text; color: transparent; font-family: 'Charm'; font-size: 24px; font-weight: 600;">Please wait while your Video is being proccessed.</span>
+                </div>
+        </div>
+
+        <!-- --------------------------------Video Preview Window Popup--------------------------- -->
+        <!-- This won't work if you want to pack this file as an executable with the '--onefile' arg or as a single file -->
+        <div class="preview-popup" id="vid-preview-popup" style="display: none">
+            <div class="popup-bg" onclick="close_preview()"></div>
+            <div class="popup-win">
+                <div class="popup-title">
+                    <h1 style="text-align: center;"><span style="background-image: linear-gradient(270deg, rgba(0, 255, 209, 1), rgba(255, 0, 184, 1)); font-family: 'Charm'; background-clip: text; -webkit-background-clip: text; color: transparent; margin-bottom: 0;">Video Preview</span></h1>
+                </div>
+                <video id="video-preview" width="84%" height="72%" controls autoplay></video>
+            </div>
+        </div>
+
+        <!-- --------------------------------Audio Preview Window Popup--------------------------- -->
+        <!-- This won't work if you want to pack this file as an executable with the '--onefile' arg or as a single file -->
+        <div class="preview-popup" id="aud-preview-popup" style="display: none">
+            <div class="popup-bg" onclick="close_preview()"></div>
+            <div class="popup-win" id="aud-prev-cont">
+                <div class="popup-title">
+                    <h1 style="text-align: center;"><span style="background-image: linear-gradient(270deg, rgba(0, 255, 209, 1), rgb(255, 1, 183)); font-family: 'Charm'; background-clip: text; -webkit-background-clip: text; color: transparent; margin-bottom: 0;">Audio Preview</span></h1>
+                </div>
+                <audio id="audio-preview" class="audio-preview" autoplay controls></audio>
+                <!--div class="audio-player">
+                    <button class="play-button"><i class="fa fa-play"></i></button>
+                    <input type="range">
+                </div-->
+                <div><canvas id="canvas" width="600" height="300"></canvas></div>
+            </div>
+        </div>
+        <!-- -------------------------------------------------------------------------------------- -->
+    </body>
+</html>
