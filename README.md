@@ -27,7 +27,7 @@ You can visit Eel's GitHub page using the [this link](https://github.com/ChrisKn
 ## How to use
 All you need is a _YouTube link_ to download your video. You can simply copy the link address from the video you want to download.
 
-Once you have the YouTube link, paste it in the textbox in the home tab and click the _Continue_ button and wait till it generates a YouTube Object from it, once done, it will take you to the congigurations menu where you can set the following attributes: 
+Once you have the YouTube link, paste it in the textbox in the home tab and click the _Continue_ button and wait till it generates a YouTube Object from it, once done, it will take you to the configurations menu where you can set the following attributes: 
 * **File Type:** Set which type of file you want to download (defaults to '_Video_').
 * **Video Resolution**: Set resolution of video you want to download (defaults to the highest Video Resolutions).
 * **Show Preview**: A boolean value based on the state of the check slider. If you want a quick preview for the video/audio, you can turn it on, audio preview comes with an _audio visualizer_ as well. **Note: this is not recommended for very large files.** 
