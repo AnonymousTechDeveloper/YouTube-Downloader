@@ -37,3 +37,5 @@ If the _Show Preview_ slider was 'on', then it will generate a copy of the downl
 
 ## Known Problems
 There are no **Known Problems** yet, if you face one, feel free to inform me in the _issues_ section. I will try to fix as many problems as I can.
+
+**Made with love by _Ansh Malviya_**
