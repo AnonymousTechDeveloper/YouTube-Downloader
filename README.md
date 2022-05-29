@@ -7,6 +7,8 @@ In order to use this software, you must have at least one of the following _brow
 * **Electron**
 * **Microsoft Edge**
 
+You **must** have _Python_ installed in your device.
+
 It is also recommended to have _Git_ installed in your device for the installation of the reqired modules and packages.
 
 ## Installation
