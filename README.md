@@ -7,6 +7,8 @@ In order to use this software, you must have at least one of the following _brow
 * **Electron**
 * **Microsoft Edge**
 
+You **must** have _Python_ installed in your device.
+
 It is also recommended to have _Git_ installed in your device for the installation of the reqired modules and packages.
 
 ## Installation
@@ -16,6 +18,8 @@ The **setup.py** will install the required modules, alternatively, you can also 
 * **MoviePy**:  `pip install moviepy`
 * **Eel**:  `pip install eel`
 * **PyTube**:  It is recommanded to use the GitHub version on pytube since they are of the latest version and pip version of pytube contains some bugs. Use `pip install git+https://github.com/pytube/pytube` command to install it, note that this need _Git_ to be installed in your device. If you don't have _Git_ installed, then download it manually from the [GitHub page of the module](https://github.com/pytube/pytube) and run **setup.py** file from it.
+
+Once the required files are installed, simply run **YouTube Downloader.py** or **YouTube Downloader.exe** (if created an executable) to use the software.
 
 ## Eel
 Eel is a little Python library for making simple Electron-like offline HTML/JS GUI apps, with full access to Python capabilities and libraries.
@@ -47,4 +51,12 @@ Here are the keypoints of the latest update of YouTube Downloader:
 > * Fixed a bug that caused the app to become unresponsive when the audio preview feature was used for the second time in a row.
 > * Now the audio file will be re-rendered after download to make sure there are no compatibility issues with some apps.
 
+**Made with love by _Ansh Malviya_**
+
+## Some Screenshots
+![image](https://user-images.githubusercontent.com/76505499/170830547-b18aecb4-e952-4861-8caa-7ad5c3dc137e.png)
+![image](https://user-images.githubusercontent.com/76505499/170830560-141a409a-c4eb-47af-bf25-15a166816ae9.png)
+![image](https://user-images.githubusercontent.com/76505499/170830575-da3a81ed-8be8-4837-be7b-8f6470960842.png)
+
+**Hope you like this software.**
 **Made with love by _Ansh Malviya_**
