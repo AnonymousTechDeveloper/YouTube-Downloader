@@ -38,4 +38,13 @@ If the _Show Preview_ slider was 'on', then it will generate a copy of the downl
 ## Known Problems
 There are no **Known Problems** yet, if you face one, feel free to inform me in the _issues_ section. I will try to fix as many problems as I can.
 
+## Update Summary
+Here are the keypoints of the latest update of YouTube Downloader:
+> * The downloaded audio file will now also include the following embeded data:
+>   1. **Artist Name**: The source video's title.
+>   2. **Author**: The YouTube channel of the source video.
+>   3. **Album Cover**: The video thumbnail will be used.
+> * Fixed a bug that caused the app to become unresponsive when the audio preview feature was used for the second time in a row.
+> * Now the audio file will be re-rendered after download to make sure there are no compatibility issues with some apps.
+
 **Made with love by _Ansh Malviya_**

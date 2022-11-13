@@ -5,25 +5,26 @@
 
 # ! NOTE: If you want to create an executable file of this code and wish it pack it in a single file (using the '--onefile' arg), then remove codes from the following lines.
 # ! 1. 'web/index.html', line 71-79: Remove/Comment whole code.
-# ! 2. 'web/js/script.js', line 56: Remove/Comment the code.
-# ! 3. 'web/js/script.js', line 62: Remove/Comment and replace the code with the one commented at line 63.
+# ! 2. 'web/js/script.js', line 57: Remove/Comment the code.
+# ! 3. 'web/js/script.js', line 63: Remove/Comment and replace the code with the one commented at line 63.
 # ? These codes may not interfere when created a 'single-filed' executable but serve no purpose without the codes above. So you may/may not remove them, it is optional and totally on you.
-# ? 1. 'YouTube Downloader.py', line 146-150: Remove/Comment the whole code.
+# ? 1. 'YouTube Downloader.py', line 153-159: Remove/Comment the whole code.
 # ? 2. 'web/index.html', line 157-185: Remove/Comment the whole code.
 # ? 3. 'web/css/style.css', line 578-678: Remove/Comment the whole code.
-# ? 4. 'web/js/script.js', line 103-189: Remove/Comment the whole code.
-# ? 5. 'web/js/script.js', line 195-231: Remove/Comment the whole code.
+# ? 4. 'web/js/script.js', line 104-236: Remove/Comment the whole code.
 # * If you want to create an executable without packing into one file or without the '--onefile' arg, you don't need to remove the codes mentioned above.
 
 # ? Import required modules
 import eel
+import requests
 from ssl import SSLError
 from urllib.error import URLError
 from pytube import YouTube, Stream
+from mutagen.id3 import ID3, APIC, TIT2, TPE1
 from shutil import move, copy
 from os.path import join as join_path
-from os import remove, makedirs, listdir
 from tkinter.messagebox import showerror
+from os import remove, makedirs, listdir, system
 from moviepy.video.io.ffmpeg_tools import ffmpeg_merge_video_audio
 
 # ? Initialize eel
@@ -56,6 +57,7 @@ def create_yt_obj(link: str):
         title = yt_obj.title
         author = yt_obj.author
         Streams = yt_obj.streams
+        
     except SSLError as Error: 
         eel.show_popup("Couldn't generate YouTube Object", "It seems that the internet connection was disturbed while generating the YouTube Object. <br>Please make sure you have a <b>stable</b> internet connection and try again. <br><br> Error: " + str(Error))
         return
@@ -116,12 +118,32 @@ def start_download(file_type: str, video_res: str or None = None, show_preview: 
     for char in invalid_chars: filtered_title = filtered_title.replace(char, "")
     
     if file_type == "Audio":
-        try: audio_file = Streams.filter(type = "audio")[0].download(filename = filtered_title + ".mp3")
+        try: audio_file = Streams.filter(type = "audio")[0].download(filename = filtered_title + " (temp).mp3")
         except Exception as Error: 
             eel.show_popup("Failed in Downloading the Audio", "There was an error while downloading the audio file. This may be caused due to disturbance in the download, or loss of the internet connection. <br>Please check you connection is proper and there is enough storage in your device and try again. <br><br>Error: " + str(Error))
-            eel.reset_dl_popup()
+            eel.reset_dl_popup(False)
             return
         
+        eel.reset_dl_popup()
+        # ? The audio file downloaded was found to be non-compatible for apps with compatiblity limitiations (this is because the file is not pure mp3). Thus, we need to re-render it via ffmpeg.
+        # ! This might increase the proccessing time and is not recommended for 'very' large audio files.
+        system(f"ffmpeg -i \"{filtered_title} (temp).mp3\" -y \"{filtered_title}.mp3\"")
+        remove(f"{filtered_title} (temp).mp3") # ? Remove the original file once it a 'pure mp3' copy of it is ready.
+        
+        # Download video thumbnail that will be used to embed in the audio file
+        img_data = requests.get(yt_obj.thumbnail_url).content
+        with open('thumbnailtemp.png', 'wb') as handler: handler.write(img_data)
+        
+        # Embed title, artist and album cover (video thumbnail) into the audio file
+        audio = ID3(f'{filtered_title}.mp3') 
+        audio.add(TIT2(encoding = 3, text = u"{0}".format(filtered_title)))
+        audio.add(TPE1(encoding = 3, text = u"{0}".format(yt_obj.author)))
+        audio.add(APIC(encoding = 3, mime = 'image/png', type = 3, desc = u'Cover', data = open('thumbnailtemp.png', "rb").read()))
+        audio.save(v2_version = 3)
+        
+        remove("thumbnailtemp.png") # Delete the video thumnail once embedded into the audio file
+        
+        # Move audio file to 'Downloads' folder once processing is done.
         try: move(filtered_title + ".mp3", join_path("Downloads", filtered_title + ".mp3"))
         except: 
             makedirs("Downloads")
@@ -135,7 +157,6 @@ def start_download(file_type: str, video_res: str or None = None, show_preview: 
             makedirs(join_path("web", "temp_files"))
             copy(join_path("Downloads", filtered_title + ".mp3"), join_path("web", "temp_files", filtered_title + ".mp3"))
         
-        eel.reset_dl_popup()
         eel.after_download(file_type, join_path("..", "temp_files", filtered_title + ".mp3"), show_preview)
             
     else: 
@@ -146,7 +167,7 @@ def start_download(file_type: str, video_res: str or None = None, show_preview: 
             except: video_file = Vid_Streams.filter(resolution = video_res)[0].download(filename = filtered_title + "(video).mp4")
         
         except Exception as Error:
-            eel.reset_dl_popup()
+            eel.reset_dl_popup(False)
             eel.after_download(None, False)
             eel.show_popup("Failed in Downloading the Video", "There was an error while downloading the video. This may be caused due to disturbance in the download, or loss of the internet connection. <br>Please check you connection is proper and there is enough storage in your device and try again. <br><br>Error: " + str(Error))
             return
@@ -196,6 +217,9 @@ available_modes = ["chrome", "electron", "edge"]
 for mode in available_modes:
     try: 
         eel.start("index.html", mode = mode, start = (900, 600), close_callback = clear_temp_files)
+        break
+    except WindowsError:
+        showerror("Launch Error", "It seems that the port this app was trying to connect with is busy. (localhost 8000) \n\n Make sure there is no other software using this port and launch again.")
         break
     except Exception as Error: 
         if mode == available_modes[-1]: showerror("Couldn't Start Application", "It seems that you don't have any of the supported web browers. \n\nInstall any one of the following browsers and try again: \n    →Google Chrome \n    →Microsoft Edge \n    →Electron")

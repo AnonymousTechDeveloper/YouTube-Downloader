@@ -1,4 +1,5 @@
 window.resizeTo(900, 600)
+var mediaElementCreated = false;
 
 eel.expose(show_popup)
 function show_popup(title, description) {
@@ -87,9 +88,12 @@ function update_progress(percentage_completed, file_type) {
 }
 
 eel.expose(reset_dl_popup)
-function reset_dl_popup() {
-    document.getElementById("load-desc").style.display = "block";
-    document.getElementsByClassName("load-anim")[0].style = "display: block";
+function reset_dl_popup(result) {
+    if (result === undefined) {result = true;};
+    if (result) {
+        document.getElementById("load-desc").style.display = "block";
+        document.getElementsByClassName("load-anim")[0].style = "display: block";
+    };
     document.getElementsByClassName("download-popup")[0].style = "display: none";
     document.getElementsByClassName("vid-dl")[0].style.display = "none";
     document.getElementById("aud-pro").style.width = 0;
@@ -115,12 +119,13 @@ function after_download(file_type, file_path, show_preview) {
             document.getElementById("audio-preview").volume = 0.6;
             document.getElementById("audio-preview").play();
             document.getElementById("aud-preview-popup").style.display = "block";
-            
-            audio = document.getElementById("audio-preview");
-
-            var context = new AudioContext();
-            
-            var src = context.createMediaElementSource(audio); 
+              
+            if (!mediaElementCreated) {
+                audio = document.getElementById("audio-preview");
+                context = new AudioContext();
+                src = context.createMediaElementSource(audio);
+                mediaElementCreated = true;
+            }
 
             var analyser = context.createAnalyser();
 
