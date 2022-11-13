@@ -51,6 +51,8 @@ Here are the keypoints of the latest update of YouTube Downloader:
 > * Fixed a bug that caused the app to become unresponsive when the audio preview feature was used for the second time in a row.
 > * Now the audio file will be re-rendered after download to make sure there are no compatibility issues with some apps.
 
+_Couldn't find a feature you're searching for or have any suggestions? Let me know in the **issues** section. Make sure you mark it with the **enhancement** label._
+
 **Made with love by _Ansh Malviya_**
 
 ## Some Screenshots
